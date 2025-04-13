@@ -1,4 +1,5 @@
 #include <iostream>
+#include <windows.h>
 #include <cctype>
 using namespace std;
 
@@ -69,7 +70,7 @@ vypisInventar(string inventar[], int pocet){
     cin>>vyber;
 }
 
-int main(){
+inventarVyber(){
     int pocet = 10;
     string inventar[pocet];
     int zivoty = 100;
@@ -109,6 +110,64 @@ int main(){
         }
     }
     cout<<"\tInventar uzavren!"<<endl;
-    cout<<"Zadali jste neplatnou hodnotu!"<<endl;
-    cout<<"Zadali jste neplatnou hodnotu!"<<endl;
+}
+
+vyberClassu(){
+    int o;
+    cout<<"\tTeď pro záchranu tohoto ostrova si musíte vybrat class!"<<endl;
+    cout<<endl;
+    do{
+        cout<<"Zde jsou classy které si můžete vybrat:"<<endl;
+        cout<<"\tPaladin"<<endl;
+        cout<<"\tMág"<<endl;
+        cout<<"\tLovec"<<endl;
+    }while(o==0);
+}
+
+
+int main(){
+    SetConsoleOutputCP(CP_UTF8);
+    int zivoty, maxZivoty;
+    int mana, maxMana;
+    int utok;
+    int gold;
+    int level;
+    int zkusenosti, potrebneZkusenosti;
+    string schopnosti[10];
+
+    char odpovedi1;
+    int o;
+    int rozvetveni = 0;
+
+    cout<<"\tVítejte na ostrově který můžete zachránit!"<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<"Chcete si poslechnout historii tohoto ostrova?(Ano-a, Ne-n)"<<endl;
+    do {
+        cout<<"Vaše odpověď: ";
+        cin>>odpovedi1;
+        odpovedi1 = tolower(odpovedi1);
+        if (odpovedi1=='a'){
+            o = 1;
+            rozvetveni = 1;
+        } else if (odpovedi1=='n'){
+            o = 1;
+            rozvetveni = 0;
+        } else {
+            cout<<"Zadali jste něco špatně, zkuste to znovu..."<<endl;
+            o = 0;
+        }
+    } while (o==0);
+    if (rozvetveni==1){
+        cout<<""<<endl;
+        cout<<""<<endl;
+        cout<<""<<endl;
+    } else if (rozvetveni==0){
+        cout<<"Historii si poslechneme někdy jindy a teď jdeme na něco zajímavějšího..."<<endl;
+    }
+
+    cout<<endl;
+    vyberClassu();
+
+    cout<<"\tProgram ukončen!"<<endl;
 }
