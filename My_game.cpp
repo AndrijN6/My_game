@@ -21,7 +21,7 @@ pridejPredmet(string inventar[], int &pocet){
             vyber = tolower(vyber);
             switch(vyber){
             case 'l':
-                cout<<"Lekarna(+10HP), pridan do inventaru na "<<pocet<<". misto!"<<endl;
+                cout<<"Lekarna(+10HP), pridana do inventaru na "<<pocet<<". misto!"<<endl;
                 inventar[pocet-1]="Lekarna(+10 HP)";
                 o=1;
                 break;
@@ -31,7 +31,7 @@ pridejPredmet(string inventar[], int &pocet){
                 o=1;
                 break;
             case 'o':
-                cout<<"Otrava(-10HP), pridan do inventaru na "<<pocet<<". misto!"<<endl;
+                cout<<"Otrava(-10HP), pridana do inventaru na "<<pocet<<". misto!"<<endl;
                 inventar[pocet-1]="Otrava(-10 HP)";
                 o=1;
                 break;
@@ -49,25 +49,77 @@ pridejPredmet(string inventar[], int &pocet){
 }
 
 odeberPredmet(string inventar[], int &pocet){
-    int vyber;
+    int vyber1;
     cout<<"Vyberte predmet ktery chcete odebrat: "<<endl;
-    for(int i; i<=pocet-1; i++){
+    for(int i=0; i<pocet; i++){
         cout<<"\t"<<i+1<<" - "<<inventar[i]<<endl;
     }
-    cout<<"Vas vyber(cislo): ";
-    cin>>vyber;
+    do{
+        cout<<"Vas vyber(cislo): ";
+        cin>>vyber1;
+    } while (vyber1<0&&vyber1>pocet);
+    for(int i=0; i<pocet; i++){
+        if (vyber1<i+1){
+            inventar[i-1]=inventar[i];
+        }
+    }
+    cout<<"Predmet c."<<vyber1<<" byl uspesne odebran z inventaru!"<<endl;
+    cout<<endl;
+    pocet = pocet - 1;
 }
 
-pouzijPredmet(string inventar[], int &pocet, int &zivoty, int &utok){}
+pouzijPredmet(string inventar[], int &pocet, int &zivoty, int &utok){
+    int vyber1;
+    cout<<"Vyberte predmet ktery chcete vyuzit: "<<endl;
+    for(int i=0; i<pocet; i++){
+        cout<<"\t"<<i+1<<" - "<<inventar[i]<<endl;
+    }
+    do{
+        cout<<"Vas vyber(cislo): ";
+        cin>>vyber1;
+    } while (vyber1<0&&vyber1>pocet);
+
+    cout<<"Predmet c."<<vyber1<<" byl uspesne vyuzit!"<<endl;
+    if(inventar[vyber1-1]=="Lekarna(+10 HP)"){
+        zivoty=zivoty+10;
+        cout<<"Zivoty zvetseny o 10, prave ted mate "<<zivoty<<"HP."<<endl;
+    } else if(inventar[vyber1-1]=="Elixir(+5 utok)"){
+        utok=utok+5;
+        cout<<"Utok zvetsen o 5, prave ted mate "<<utok<<" utoku."<<endl;
+    } else if(inventar[vyber1-1]=="Otrava(-10 HP)"){
+        zivoty=zivoty-10;
+        cout<<"Zivoty zmenseny o 10, prave ted mate "<<zivoty<<"HP."<<endl;
+    } else if(inventar[vyber1-1]=="Tajemny svitek(+HP, -HP, +utok)"){
+        srand(static_cast<unsigned>(time(0)));
+        int R = rand() % 3 + 1;
+        if (R==1){
+            zivoty=zivoty+10;
+            cout<<"Zivoty zvetseny o 10, prave ted mate "<<zivoty<<"HP."<<endl;
+        } else if (R==2){
+            zivoty=zivoty-10;
+            cout<<"Zivoty zmenseny o 10, prave ted mate "<<zivoty<<"HP."<<endl;
+        } else if (R==3){
+            utok=utok+10;
+            cout<<"Utok zvetsen o 10, prave ted mate "<<utok<<" utoku."<<endl;
+        }
+    }
+
+    for(int i=0; i<pocet; i++){
+        if (vyber1<i+1){
+            inventar[i-1]=inventar[i];
+        }
+    }
+    cout<<endl;
+    pocet = pocet - 1;
+}
 
 vypisInventar(string inventar[], int pocet){
     int vyber;
     cout<<"Vas inventar: "<<endl;
-    for(int i; i<=pocet-1; i++){
+    for(int i=0; i<pocet; i++){
         cout<<"\t"<<i+1<<" - "<<inventar[i]<<endl;
     }
-    cout<<"Pokracovat-znak_a_enter(cokoli): "<<endl;
-    cin>>vyber;
+    cout<<endl;
 }
 
 inventarVyber(){
@@ -112,15 +164,38 @@ inventarVyber(){
     cout<<"\tInventar uzavren!"<<endl;
 }
 
-vyberClassu(){
-    int o;
-    cout<<"\tTeď pro záchranu tohoto ostrova si musíte vybrat class!"<<endl;
+vyberClassu(int &maxZivoty, int &maxMana, int &utok, string schopnosti[]){
+    int o, oo;
+    char vyber;
+    cout<<"\tTeď pro záchranu tohoto ostrova si musíte vybrat classu!"<<endl;
     cout<<endl;
     do{
-        cout<<"Zde jsou classy které si můžete vybrat:"<<endl;
-        cout<<"\tPaladin"<<endl;
-        cout<<"\tMág"<<endl;
-        cout<<"\tLovec"<<endl;
+        cout<<"Zde jsou classy které si můžete vybrat: "<<endl;
+        cout<<"\tP-Paladin"<<endl;
+        cout<<"\tM-Mág"<<endl;
+        cout<<"\tL-Lovec"<<endl;
+        cout<<"\tZ-Zloděj"<<endl;
+        do{
+            cout<<"Vas vyber: ";
+            cin>>vyber;
+            vyber = tolower(vyber);
+            switch(vyber){
+            case 'p':
+                oo=1;
+                break;
+            case 'm':
+                oo=1;
+                break;
+            case 'l':
+                oo=1;
+                break;
+            case 'z':
+                oo=1;
+                break;
+            default:
+                cout<<"Zadali jste neplatne pismeno zkuste to znovu."<<endl;
+            }
+        } while (oo==0);
     }while(o==0);
 }
 
@@ -167,7 +242,7 @@ int main(){
     }
 
     cout<<endl;
-    vyberClassu();
+    vyberClassu(maxZivoty, maxMana, utok, schopnosti);
 
     cout<<"\tProgram ukončen!"<<endl;
 }
