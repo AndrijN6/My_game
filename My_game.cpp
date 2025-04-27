@@ -1,6 +1,8 @@
 #include <iostream>
 #include <windows.h>
 #include <cctype>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 pridejPredmet(string inventar[], int &pocet){
@@ -164,9 +166,9 @@ inventarVyber(){
     cout<<"\tInventar uzavren!"<<endl;
 }
 
-vyberClassu(int &maxZivoty, int &maxMana, int &utok, string schopnosti[]){
-    int o, oo;
-    char vyber;
+vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string schopnosti[]){
+    int o=0, oo=0, ooo=0;
+    char vyber, vyber2;
     cout<<"\tTeď pro záchranu tohoto ostrova si musíte vybrat classu!"<<endl;
     cout<<endl;
     do{
@@ -176,24 +178,178 @@ vyberClassu(int &maxZivoty, int &maxMana, int &utok, string schopnosti[]){
         cout<<"\tL-Lovec"<<endl;
         cout<<"\tZ-Zloděj"<<endl;
         do{
-            cout<<"Vas vyber: ";
+            cout<<"Váš výběr: ";
             cin>>vyber;
             vyber = tolower(vyber);
             switch(vyber){
             case 'p':
-                oo=1;
+                cout<<"Class: Paladin"<<endl;
+                cout<<endl;
+                cout<<"Statistika: "<<endl;
+                cout<<"\tŽivoty - 15/15"<<endl;
+                cout<<"\tÚtok - 15"<<endl;
+                cout<<"\tMana - 10/10"<<endl;
+                cout<<endl;
+                cout<<"Schopnosti: "<<endl;
+                cout<<"\tAura - 200% poškození 1 nepřáteli za 2 many"<<endl;
+                cout<<"\tSvatý útok - 50% poškození všem nepřátelům za 3 many"<<endl;
+                cout<<"\tOživení - vyléčíš si 20% životů za 2 many"<<endl;
+                cout<<endl;
+                cout<<endl;
+                do{
+                    cout<<"Chcete si zvolit tuto classu nebo se vrátit k výběru mezi všemi classami?"<<endl;
+                    cout<<"A - ano, zvolit tuto / N - ne, pokračovat ve výběru"<<endl;
+                    cout<<"Váš výběr: ";
+                    cin>>vyber2;
+                    vyber2 = tolower(vyber2);
+                    if (vyber2 == 'a'){
+                        classa[0] = "Paladin";
+                        maxZivoty = 15;
+                        utok = 15;
+                        maxMana = 10;
+                        schopnosti[0] = "Aura - 200% poškození 1 nepřáteli za 2 many";
+                        schopnosti[1] = "Svatý útok - 50% poškození všem nepřátelům za 3 many";
+                        schopnosti[2] = "Oživení - vyléčíš si 20% životů za 2 many";
+                        cout<<"Class je úspěšně vybrán, váš class: "<<classa[0]<<endl;
+                        o=1;
+                        oo=1;
+                        ooo=1;
+                    } else if(vyber2 == 'n'){
+                        cout<<"Jistě, zde je výběr: "<<endl;
+                        oo=1;
+                        ooo=1;
+                    } else{
+                        cout<<"Toto písmeno tu není, vyberte 1. písmeno, tedy A nebo N."<<endl;
+                        ooo=0;
+                    }
+                }while(ooo==0);
                 break;
             case 'm':
-                oo=1;
+                cout<<"Class: Mág"<<endl;
+                cout<<endl;
+                cout<<"Statistika: "<<endl;
+                cout<<"\tŽivoty - 10/10"<<endl;
+                cout<<"\tÚtok - 15"<<endl;
+                cout<<"\tMana - 15/15"<<endl;
+                cout<<endl;
+                cout<<"Schopnosti: "<<endl;
+                cout<<"\tOhnivá koule - 300% poškození 1 nepřáteli za 4 many"<<endl;
+                cout<<"\tOhnivé pole - 100% poškození všem nepřátelům za 5 many"<<endl;
+                cout<<"\tProkletí - příští poškození od nepřítele je o 50% slabší za 3 many"<<endl;
+                cout<<endl;
+                do{
+                    cout<<"Chcete si zvolit tuto classu nebo se vrátit k výběru mezi všemi classami?"<<endl;
+                    cout<<"A - ano, zvolit tuto / N - ne, pokračovat ve výběru"<<endl;
+                    cout<<"Váš výběr: ";
+                    cin>>vyber2;
+                    vyber2 = tolower(vyber2);
+                    if (vyber2 == 'a'){
+                        classa[0] = "Mág";
+                        maxZivoty = 10;
+                        utok = 15;
+                        maxMana = 15;
+                        schopnosti[0] = "Ohnivá koule - 300% poškození 1 nepřáteli za 4 many";
+                        schopnosti[1] = "Ohnivé pole - 100% poškození všem nepřátelům za 5 many";
+                        schopnosti[2] = "Prokletí - příští poškození od nepřítele je o 50% slabší za 3 many";
+                        cout<<"Class je úspěšně vybrán, váš class: "<<classa[0]<<endl;
+                        o=1;
+                        oo=1;
+                        ooo=1;
+                    } else if(vyber2 == 'n'){
+                        cout<<"Jistě, zde je výběr: "<<endl;
+                        oo=1;
+                        ooo=1;
+                    } else{
+                        cout<<"Toto písmeno tu není, vyberte 1. písmeno, tedy A nebo N."<<endl;
+                        ooo=0;
+                    }
+                }while(ooo==0);
                 break;
             case 'l':
-                oo=1;
+                cout<<"Class: Lovec"<<endl;
+                cout<<endl;
+                cout<<"Statistika: "<<endl;
+                cout<<"\tŽivoty - 18/18"<<endl;
+                cout<<"\tÚtok - 12"<<endl;
+                cout<<"\tMana - 10/10"<<endl;
+                cout<<endl;
+                cout<<"Schopnosti: "<<endl;
+                cout<<"\tVýstřel - na střelu naneseš přírodní element a naneseš nepříteli 200% poškození za 3 many"<<endl;
+                cout<<"\tLéčení - vyléčíš si 10% životů přírodním elementem za 2 many"<<endl;
+                cout<<"\tPast - každý příští útok nepřítel s šancí 33% stoupne do pasti dostane 10 poškození a jeho útok se sníží o 33%"<<endl;
+                cout<<endl;
+                do{
+                    cout<<"Chcete si zvolit tuto classu nebo se vrátit k výběru mezi všemi classami?"<<endl;
+                    cout<<"A - ano, zvolit tuto / N - ne, pokračovat ve výběru"<<endl;
+                    cout<<"Váš výběr: ";
+                    cin>>vyber2;
+                    vyber2 = tolower(vyber2);
+                    if (vyber2 == 'a'){
+                        classa[0] = "Lovec";
+                        maxZivoty = 18;
+                        utok = 12;
+                        maxMana = 10;
+                        schopnosti[0] = "Výstřel - na střelu naneseš přírodní element a naneseš nepříteli 200% poškození za 3 many";
+                        schopnosti[1] = "Léčení - vyléčíš si 10% životů přírodním elementem za 2 many";
+                        schopnosti[2] = "Past - každý příští útok nepřítel s šancí 33% stoupne do pasti dostane 10 poškození a jeho útok se sníží o 33%";
+                        cout<<"Class je úspěšně vybrán, váš class: "<<classa[0]<<endl;
+                        o=1;
+                        oo=1;
+                        ooo=1;
+                    } else if(vyber2 == 'n'){
+                        cout<<"Jistě, zde je výběr: "<<endl;
+                        oo=1;
+                        ooo=1;
+                    } else{
+                        cout<<"Toto písmeno tu není, vyberte 1. písmeno, tedy A nebo N."<<endl;
+                        ooo=0;
+                    }
+                }while(ooo==0);
                 break;
             case 'z':
-                oo=1;
+                cout<<"Class: Zloděj"<<endl;
+                cout<<endl;
+                cout<<"Statistika: "<<endl;
+                cout<<"\tŽivoty - 12/12"<<endl;
+                cout<<"\tÚtok - 18"<<endl;
+                cout<<"\tMana - 10/10"<<endl;
+                cout<<endl;
+                cout<<"Schopnosti: "<<endl;
+                cout<<"\tSkrytí- s 50% šancí nepřítel na vás nezaútočí za 3 many"<<endl;
+                cout<<"\tRychlý útok- s 80% šancí provedete 2. útok a s 10% šancí i 3. útok za 3 many"<<endl;
+                cout<<"\tKritický útok - nanesete 200% poškození a s šancí v 25% nanesete 300% poškození za 2 many"<<endl;
+                cout<<endl;
+                do{
+                    cout<<"Chcete si zvolit tuto classu nebo se vrátit k výběru mezi všemi classami?"<<endl;
+                    cout<<"A - ano, zvolit tuto / N - ne, pokračovat ve výběru"<<endl;
+                    cout<<"Váš výběr: ";
+                    cin>>vyber2;
+                    vyber2 = tolower(vyber2);
+                    if (vyber2 == 'a'){
+                        classa[0] = "Zloděj";
+                        maxZivoty = 12;
+                        utok = 18;
+                        maxMana = 10;
+                        schopnosti[0] = "Skrytí- s 50% šancí nepřítel na vás nezaútočí za 3 many";
+                        schopnosti[1] = "Rychlý útok- s 80% šancí provedete 2. útok a s 10% šancí i 3. útok za 3 many";
+                        schopnosti[2] = "Kritický útok - nanesete 200% poškození a s šancí v 25% nanesete 300% poškození za 2 many";
+                        cout<<"Class je úspěšně vybrán, váš class: "<<classa[0]<<endl;
+                        o=1;
+                        oo=1;
+                        ooo=1;
+                    } else if(vyber2 == 'n'){
+                        cout<<"Jistě, zde je výběr: "<<endl;
+                        oo=1;
+                        ooo=1;
+                    } else{
+                        cout<<"Toto písmeno tu není, vyberte 1. písmeno, tedy A nebo N."<<endl;
+                        ooo=0;
+                    }
+                }while(ooo==0);
                 break;
             default:
-                cout<<"Zadali jste neplatne pismeno zkuste to znovu."<<endl;
+                cout<<"Toto písmeno tu není, vyberte 1. písmeno od názvu classy."<<endl;
+                oo=0;
             }
         } while (oo==0);
     }while(o==0);
@@ -202,6 +358,7 @@ vyberClassu(int &maxZivoty, int &maxMana, int &utok, string schopnosti[]){
 
 int main(){
     SetConsoleOutputCP(CP_UTF8);
+    string classa[1];
     int zivoty, maxZivoty;
     int mana, maxMana;
     int utok;
@@ -219,7 +376,7 @@ int main(){
     cout<<endl;
     cout<<"Chcete si poslechnout historii tohoto ostrova?(Ano-a, Ne-n)"<<endl;
     do {
-        cout<<"Vaše odpověď: ";
+        cout<<"Váš výběr: ";
         cin>>odpovedi1;
         odpovedi1 = tolower(odpovedi1);
         if (odpovedi1=='a'){
@@ -242,7 +399,9 @@ int main(){
     }
 
     cout<<endl;
-    vyberClassu(maxZivoty, maxMana, utok, schopnosti);
+    vyberClassu(classa, maxZivoty, maxMana, utok, schopnosti);
+    zivoty = maxZivoty;
+    mana = maxMana;
 
     cout<<"\tProgram ukončen!"<<endl;
 }
