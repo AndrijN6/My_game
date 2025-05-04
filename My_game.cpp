@@ -368,8 +368,10 @@ int main(){
     string schopnosti[10];
 
     char odpovedi1;
-    int o;
+    int o, oo;
     int rozvetveni = 0;
+
+    int vyber;
 
     cout<<"\tVítejte na ostrově který můžete zachránit!"<<endl;
     cout<<endl;
@@ -391,9 +393,18 @@ int main(){
         }
     } while (o==0);
     if (rozvetveni==1){
-        cout<<""<<endl;
-        cout<<""<<endl;
-        cout<<""<<endl;
+        cout<<"Kdysi dávno před tisíselitími na tomto místě bylo čiré moře."<<endl;
+        cout<<"Jednou však království Ardante zaútočilo na krále draků, "<<endl;
+        cout<<"tím se započala kontinentální vláka lidstva proti králi draků."<<endl;
+        cout<<"Válka pokračovala roky..., až z lidstva nezbyly skoro jen ruiny, "<<endl;
+        cout<<"půlka draků zemřela a zraněný král draků vytvořil tento ostrov pro své vyzdravení."<<endl;
+        cout<<"Tehdejší lidstvo bylo mnohemkrát pokročilejší, "<<endl;
+        cout<<"a po té skáze jsme neměli na krále draků, který se tu léčí."<<endl;
+        cout<<"Jak minuly ty tisíceletí, tak nikdo neví jestli je král draků stále živ, "<<endl;
+        cout<<"ale jisté je, že jeho moc a aura napomáhá vznikat novým a silnějším monstrům, "<<endl;
+        cout<<"a právě proto tu žijí nejčastěji zdatní bojovat nebo vojenské síly."<<endl;
+        cout<<"No a jak je asi zřejmé, čím blíže se přiblížíte k centru ostrova, tím silnější nestvůry tam budou."<<endl;
+        cout<<endl;
     } else if (rozvetveni==0){
         cout<<"Historii si poslechneme někdy jindy a teď jdeme na něco zajímavějšího..."<<endl;
     }
@@ -402,6 +413,48 @@ int main(){
     vyberClassu(classa, maxZivoty, maxMana, utok, schopnosti);
     zivoty = maxZivoty;
     mana = maxMana;
+
+    o = 1;
+    while(o==1){
+        cout<<endl;
+        cout<<"---VESTNICE---"<<endl;
+        cout<<endl;
+        cout<<""<<endl;
+
+        oo = 1;
+        while (oo==1){
+            cout<<"Jak chcete postoupit?"<<endl;
+            cout<<"\t1 - Otevřít inventář"<<endl;
+            cout<<"\t2 - Otevřít statistiku"<<endl;
+            cout<<"\t3 - Jít nakoupit"<<endl;
+            cout<<"\t4 - Vyspat se"<<endl;
+            cout<<"\t5 - Jít do boje"<<endl;
+            cout<<"Váš výběr: ";
+            cin>>vyber;
+
+            switch(vyber){
+            case 1:
+                inventarVyber();
+                oo = 0;
+                break;
+            case 2:
+                oo = 0;
+                break;
+            case 3:
+                oo = 0;
+                break;
+            case 4:
+                oo = 0;
+                break;
+            case 5:
+                oo = 0;
+                break;
+            default:
+                cout<<"Zadali jste neplatnou hodnotu!"<<endl;
+            }
+        }
+    }
+
 
     cout<<"\tProgram ukončen!"<<endl;
 }
