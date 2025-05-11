@@ -355,9 +355,184 @@ vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string sch
     }while(o==0);
 }
 
+statistika(string jmeno[], string classa[], int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &utok, int &gold, int &level, int &zkusenosti, int &potrebneZkusenosti, string schopnosti[], int &pocetSchopnosti, int &bonusStaty, int &bonusUzite){
+    int o, oo = 1, ooo;
+    char odpovedi1, odpovedi4;
+    int odpovedi2, odpovedi3;
+    while(zkusenosti>=potrebneZkusenosti){
+        level = level + 1;
+        zkusenosti = zkusenosti - potrebneZkusenosti;
+        bonusStaty = bonusStaty + 10;
+        bonusUzite = bonusUzite + 1;
+        if(bonusUzite==1){
+            potrebneZkusenosti = 10;
+        }else if(bonusUzite==2){
+            potrebneZkusenosti = 20;
+        }else if(bonusUzite==3){
+            potrebneZkusenosti = 40;
+        }else if(bonusUzite==4){
+            potrebneZkusenosti = 70;
+        }else if(bonusUzite==5){
+            potrebneZkusenosti = 150;
+        }else if(bonusUzite==6){
+            potrebneZkusenosti = 250;
+        }else if(bonusUzite==7){
+            potrebneZkusenosti = 400;
+        }else if(bonusUzite==8){
+            potrebneZkusenosti = 750;
+        }
+    }
+
+
+    cout<<"\t---STATUS---"<<endl;
+    cout<<endl;
+    cout<<"Jméno: "<<jmeno[0]<<"\tClass: "<<classa[0]<<endl;
+    cout<<"Level: "<<level<<"\tZkušenosti: "<<zkusenosti<<"/"<<potrebneZkusenosti<<endl;
+    cout<<"Statistiky: "<<endl;
+    cout<<"\tŽivoty: "<<zivoty<<"/"<<maxZivoty<<endl;
+    cout<<"\tÚtok: "<<utok<<endl;
+    cout<<"\tMana: "<<mana<<"/"<<maxMana<<endl;
+    cout<<"Schopnosti: "<<endl;
+    for(int i=0; i<pocetSchopnosti; i++){
+        cout<<"\t"<<schopnosti[i]<<endl;
+    }
+    cout<<"Zlato: "<<gold<<endl;
+    cout<<endl;
+    cout<<endl;
+
+
+    cout<<"Staty k využití: "<<bonusStaty<<endl;
+    cout<<"Chcete využít neužité staty?(Ano-a, Ne-n)"<<endl;
+    do {
+        cout<<"Vaše odpověď: ";
+        cin>>odpovedi1;
+        odpovedi1 = tolower(odpovedi1);
+        if (odpovedi1=='a'){
+            while (oo==1){
+            cout<<"Kam chcete převést neužité staty?("<<bonusStaty<<")"<<endl;
+            cout<<"\t1 - Životy"<<endl;
+            cout<<"\t2 - Útok"<<endl;
+            cout<<"\t3 - Mana"<<endl;
+            cout<<"Váš výběr: ";
+            cin>>odpovedi2;
+
+            switch(odpovedi2){
+            case 1:
+                cout<<"O kolik chcete zvednout životy?"<<endl;
+                cout<<"Váše odpověď: ";
+                cin>>odpovedi3;
+                if(odpovedi3<=bonusStaty){
+                    bonusStaty = bonusStaty - odpovedi3;
+                    maxZivoty = maxZivoty + odpovedi3;
+                    zivoty = maxZivoty;
+                    cout<<"Stat Životy byl úspěšně zvětšen o "<<odpovedi3<<"!"<<endl;
+                    cout<<endl;
+                    cout<<"Chcete pokračovat ve výběru?(Ano-a, Ne-n)"<<endl;
+                    do{
+                        cout<<"Vaše odpověď: ";
+                        cin>>odpovedi4;
+                        odpovedi4 = tolower(odpovedi4);
+                        if(odpovedi4=='a'){
+                            cout<<"Zde je výběr..."<<endl;
+                            ooo = 0;
+                        }else if(odpovedi4=='n'){
+                            cout<<"Výběr ukončen."<<endl;
+                            oo = 0;
+                            ooo = 0;
+                        }else{
+                            ooo = 1;
+                            cout<<"Zadali jste něco špatně..."<<endl;
+                        }
+                    }while(ooo==1);
+                }else{
+                    cout<<"Přesáhli jste hodnotu neužitých statů!"<<endl;
+                    cout<<"Zkuste to znovu..."<<endl;
+                }
+                break;
+            case 2:
+                cout<<"O kolik chcete zvednout útok?"<<endl;
+                cout<<"Váše odpověď: ";
+                cin>>odpovedi3;
+                if(odpovedi3<=bonusStaty){
+                    bonusStaty = bonusStaty - odpovedi3;
+                    maxZivoty = maxZivoty + odpovedi3;
+                    zivoty = maxZivoty;
+                    cout<<"Stat Útok byl úspěšně zvětšen o "<<odpovedi3<<"!"<<endl;
+                    cout<<endl;
+                    cout<<"Chcete pokračovat ve výběru?(Ano-a, Ne-n)"<<endl;
+                    do{
+                        cout<<"Vaše odpověď: ";
+                        cin>>odpovedi4;
+                        odpovedi4 = tolower(odpovedi4);
+                        if(odpovedi4=='a'){
+                            cout<<"Zde je výběr..."<<endl;
+                            ooo = 0;
+                        }else if(odpovedi4=='n'){
+                            cout<<"Výběr ukončen."<<endl;
+                            oo = 0;
+                            ooo = 0;
+                        }else{
+                            ooo = 1;
+                            cout<<"Zadali jste něco špatně..."<<endl;
+                        }
+                    }while(ooo==1);
+                }else{
+                    cout<<"Přesáhli jste hodnotu neužitých statů!"<<endl;
+                    cout<<"Zkuste to znovu..."<<endl;
+                }
+                break;
+            case 3:
+                cout<<"O kolik chcete zvednout manu?"<<endl;
+                cout<<"Váše odpověď: ";
+                cin>>odpovedi3;
+                if(odpovedi3<=bonusStaty){
+                    bonusStaty = bonusStaty - odpovedi3;
+                    maxZivoty = maxZivoty + odpovedi3;
+                    zivoty = maxZivoty;
+                    cout<<"Stat Mana byl úspěšně zvětšen o "<<odpovedi3<<"!"<<endl;
+                    cout<<endl;
+                    cout<<"Chcete pokračovat ve výběru?(Ano-a, Ne-n)"<<endl;
+                    do{
+                        cout<<"Vaše odpověď: ";
+                        cin>>odpovedi4;
+                        odpovedi4 = tolower(odpovedi4);
+                        if(odpovedi4=='a'){
+                            cout<<"Zde je výběr..."<<endl;
+                            ooo = 0;
+                        }else if(odpovedi4=='n'){
+                            cout<<"Výběr ukončen."<<endl;
+                            oo = 0;
+                            ooo = 0;
+                        }else{
+                            ooo = 1;
+                            cout<<"Zadali jste něco špatně..."<<endl;
+                        }
+                    }while(ooo==1);
+                }else{
+                    cout<<"Přesáhli jste hodnotu neužitých statů!"<<endl;
+                    cout<<"Zkuste to znovu..."<<endl;
+                }
+                break;
+            default:
+                cout<<"Zadali jste neplatnou hodnotu!"<<endl;
+            }
+            }
+            o = 1;
+        } else if (odpovedi1=='n'){
+            cout<<"Tak příště..."<<bonusStaty<<endl;
+            o = 1;
+        } else {
+            cout<<"Zadali jste něco špatně..."<<endl;
+            o = 0;
+        }
+    } while (o==0);
+    cout<<endl;
+    cout<<endl;
+}
 
 int main(){
     SetConsoleOutputCP(CP_UTF8);
+    string jmeno[1];
     string classa[1];
     int zivoty, maxZivoty;
     int mana, maxMana;
@@ -366,6 +541,8 @@ int main(){
     int level;
     int zkusenosti, potrebneZkusenosti;
     string schopnosti[10];
+    int pocetSchopnosti;
+    int bonusStaty, bonusUzite=0;
 
     char odpovedi1;
     int o, oo;
@@ -375,6 +552,9 @@ int main(){
 
     cout<<"\tVítejte na ostrově který můžete zachránit!"<<endl;
     cout<<endl;
+    cout<<"Jaké je vaše jméno?"<<endl;
+    cout<<"Jméno: ";
+    cin>>jmeno[0];
     cout<<endl;
     cout<<"Chcete si poslechnout historii tohoto ostrova?(Ano-a, Ne-n)"<<endl;
     do {
@@ -413,17 +593,22 @@ int main(){
     vyberClassu(classa, maxZivoty, maxMana, utok, schopnosti);
     zivoty = maxZivoty;
     mana = maxMana;
+    level = 1;
+    zkusenosti = 0;
+    potrebneZkusenosti = 5;
+    gold = 50;
+    pocetSchopnosti = 3;
 
     o = 1;
     while(o==1){
         cout<<endl;
-        cout<<"---VESTNICE---"<<endl;
+        cout<<"\t---VESTNICE---"<<endl;
         cout<<endl;
         cout<<""<<endl;
 
         oo = 1;
         while (oo==1){
-            cout<<"Jak chcete postoupit?"<<endl;
+            cout<<"Jak chcete pokračovat?"<<endl;
             cout<<"\t1 - Otevřít inventář"<<endl;
             cout<<"\t2 - Otevřít statistiku"<<endl;
             cout<<"\t3 - Jít nakoupit"<<endl;
@@ -435,19 +620,15 @@ int main(){
             switch(vyber){
             case 1:
                 inventarVyber();
-                oo = 0;
                 break;
             case 2:
-                oo = 0;
+                statistika(jmeno, classa, zivoty, maxZivoty, mana, maxMana, utok, gold, level, zkusenosti, potrebneZkusenosti, schopnosti, pocetSchopnosti, bonusStaty, bonusUzite);
                 break;
             case 3:
-                oo = 0;
                 break;
             case 4:
-                oo = 0;
                 break;
             case 5:
-                oo = 0;
                 break;
             default:
                 cout<<"Zadali jste neplatnou hodnotu!"<<endl;
