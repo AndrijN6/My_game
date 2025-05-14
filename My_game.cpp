@@ -633,15 +633,146 @@ lehkyPriklad(){
 
 stredniPriklad(){
     srand(time(0));
+    int t = rand()%4+1;
+    int a = rand()%200+1;
+    int b = rand()%200+1;
+    int c, odpoved, o = 1, oo = 1;
+
+    cout<<"Střední příklad: "<<endl;
+    do{
+        if(t==1){
+            cout<<"\t"<<a<<" + "<<b<<" = ";
+            cin>>odpoved;
+            c = a+b;
+            if(odpoved==c){
+                cout<<"Správně!"<<endl;
+                o = 0;
+            } else{
+                cout<<"Chyba, zkuste to znouvu!"<<endl;
+                o = 1;
+            }
+        }else if(t==2){
+            cout<<"\t"<<a<<" - "<<b<<" = ";
+            cin>>odpoved;
+            c = a-b;
+            if(odpoved==c){
+                cout<<"Správně!"<<endl;
+                o = 0;
+            } else{
+                cout<<"Chyba, zkuste to znouvu!"<<endl;
+                o = 1;
+            }
+        }else if(t==3){
+            int a = rand()%50+1;
+            int b = rand()%50+1;
+            cout<<"\t"<<a<<" * "<<b<<" = ";
+            cin>>odpoved;
+            c = a*b;
+            if(odpoved==c){
+                cout<<"Správně!"<<endl;
+                o = 0;
+            } else{
+                cout<<"Chyba, zkuste to znouvu!"<<endl;
+                o = 1;
+            }
+        }else if(t==4){
+            do{
+                if(a%b==0){
+                    cout<<"\t"<<a<<" / "<<b<<" = ";
+                    cin>>odpoved;
+                    c = a/b;
+                    if(odpoved==c){
+                        cout<<"Správně!"<<endl;
+                        o = 0;
+                        oo = 0;
+                    } else{
+                        cout<<"Chyba, zkuste to znouvu!"<<endl;
+                        o = 1;
+                    }
+                }else{
+                    int a = rand()%200+1;
+                    int b = rand()%50+1;
+                    o = 1;
+                }
+            }while(oo==1);
+        }
+    }while(o==1);
 }
 
 tezkyPriklad(){
     srand(time(0));
+    int t = rand()%4+1;
+    int a = rand()%500+1;
+    int b = rand()%500+1;
+    int c, odpoved, o = 1, oo = 1;
+
+    cout<<"Těžký příklad: "<<endl;
+    do{
+        if(t==1){
+            cout<<"\t"<<a<<" + "<<b<<" = ";
+            cin>>odpoved;
+            c = a+b;
+            if(odpoved==c){
+                cout<<"Správně!"<<endl;
+                o = 0;
+            } else{
+                cout<<"Chyba, zkuste to znouvu!"<<endl;
+                o = 1;
+            }
+        }else if(t==2){
+            cout<<"\t"<<a<<" - "<<b<<" = ";
+            cin>>odpoved;
+            c = a-b;
+            if(odpoved==c){
+                cout<<"Správně!"<<endl;
+                o = 0;
+            } else{
+                cout<<"Chyba, zkuste to znouvu!"<<endl;
+                o = 1;
+            }
+        }else if(t==3){
+            int a = rand()%100+1;
+            int b = rand()%100+1;
+            cout<<"\t"<<a<<" * "<<b<<" = ";
+            cin>>odpoved;
+            c = a*b;
+            if(odpoved==c){
+                cout<<"Správně!"<<endl;
+                o = 0;
+            } else{
+                cout<<"Chyba, zkuste to znouvu!"<<endl;
+                o = 1;
+            }
+        }else if(t==4){
+            do{
+                if(a%b==0){
+                    cout<<"\t"<<a<<" / "<<b<<" = ";
+                    cin>>odpoved;
+                    c = a/b;
+                    if(odpoved==c){
+                        cout<<"Správně!"<<endl;
+                        o = 0;
+                        oo = 0;
+                    } else{
+                        cout<<"Chyba, zkuste to znouvu!"<<endl;
+                        o = 1;
+                    }
+                }else{
+                    int a = rand()%1000+1;
+                    int b = rand()%100+1;
+                    o = 1;
+                }
+            }while(oo==1);
+        }
+    }while(o==1);
 }
 
-spani(int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &gold){
+spani(int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &utok, int &gold){
     int o = 0, oo = 0, odpoved1, mezivypocet;
     char odpoved2;
+    int random;
+    string random1;
+    srand(time(0));
 
     cout<<"Ahoj, vyber si kde se chceš vyspat!"<<endl;
     do {
@@ -721,7 +852,7 @@ spani(int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &gold){
                     mana = maxMana;
                 }
 
-                cout<<"...o 8 hodin později..."<<endl;
+                cout<<"...o 10 hodin později..."<<endl;
                 cout<<"Vyspaly jste se za 10 zlaťáků, vaše životy a mana se vyregenerovaly na 50%!"<<endl;
 
                 cout<<"Chcete jít spát ještě jednou?(Ano-a, Ne-n)"<<endl;
@@ -747,10 +878,96 @@ spani(int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &gold){
             }
             break;
         case 3:
-            stredniPriklad();
+            if(gold>=20){
+                stredniPriklad();
+                cout<<endl;
+                gold = gold-20;
+
+                mezivypocet = (zivoty/4)*3;
+                if(zivoty+mezivypocet<=maxZivoty){
+                    zivoty = zivoty + mezivypocet;
+                }else{
+                    zivoty = maxZivoty;
+                }
+
+                mezivypocet = (mana/4)*3;
+                if(mana+mezivypocet<=maxMana){
+                    mana = mana + mezivypocet;
+                }else{
+                    mana = maxMana;
+                }
+
+                cout<<"...o 10 hodin později..."<<endl;
+                cout<<"Vyspaly jste se za 20 zlaťáků, vaše životy a mana se vyregenerovaly na 75%!"<<endl;
+
+                cout<<"Chcete jít spát ještě jednou?(Ano-a, Ne-n)"<<endl;
+                do{
+                    cout<<"Vaše odpověď: ";
+                    cin>>odpoved2;
+                    odpoved2 = tolower(odpoved2);
+                    if (odpoved2=='a'){
+                        o = 0;
+                        oo = 1;
+                    } else if (odpoved2=='n'){
+                        cout<<"Spánek ukončen."<<endl;
+                        o = 1;
+                        oo = 1;
+                    } else {
+                        cout<<"Zadali jste něco špatně, zkuste to znovu..."<<endl;
+                        oo = 0;
+                    }
+                }while(oo==0);
+            }else{
+                cout<<"Nemáte dost zlata, dnes se nevyspíte..."<<endl;
+                o = 1;
+            }
             break;
         case 4:
-            tezkyPriklad();
+            if(gold>=50){
+                tezkyPriklad();
+                cout<<endl;
+                gold = gold-50;
+
+                random = rand()%3+1;
+                if(random==1){
+                    utok = utok + 1;
+                    random1 = "útoku";
+                }else if(random==2){
+                    maxZivoty = maxZivoty + 1;
+                    random1 = "životům";
+                }else if(random==3){
+                    maxMana = maxMana + 1;
+                    random1 = "maně";
+                }
+
+                zivoty = maxZivoty;
+                mana = maxMana;
+
+                cout<<"...o 12 hodin později..."<<endl;
+                cout<<"Vyspaly jste se za 50 zlaťáků, vaše životy a mana se vyregenerovaly na 100%!"<<endl;
+                cout<<"1 bonusová charakteristika se přidala k "<<random1<<"!"<<endl;
+
+                cout<<"Chcete jít spát ještě jednou?(Ano-a, Ne-n)"<<endl;
+                do{
+                    cout<<"Vaše odpověď: ";
+                    cin>>odpoved2;
+                    odpoved2 = tolower(odpoved2);
+                    if (odpoved2=='a'){
+                        o = 0;
+                        oo = 1;
+                    } else if (odpoved2=='n'){
+                        cout<<"Spánek ukončen."<<endl;
+                        o = 1;
+                        oo = 1;
+                    } else {
+                        cout<<"Zadali jste něco špatně, zkuste to znovu..."<<endl;
+                        oo = 0;
+                    }
+                }while(oo==0);
+            }else{
+                cout<<"Nemáte dost zlata, dnes se nevyspíte..."<<endl;
+                o = 1;
+            }
             break;
         case 5:
             break;
@@ -858,7 +1075,7 @@ int main(){
             case 3:
                 break;
             case 4:
-                spani(zivoty, maxZivoty, mana, maxMana, gold);
+                spani(zivoty, maxZivoty, mana, maxMana, utok, gold);
                 break;
             case 5:
                 break;
