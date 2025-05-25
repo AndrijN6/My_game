@@ -978,6 +978,328 @@ spani(int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &utok, int &gold
     } while (o==0);
 }
 
+obchodJidlo(int &gold, string inventar[], int &plnostInventaru, int efekt[], int pocetEfektu[]){
+    int o = 0, odpoved;
+
+    do {
+        cout<<"Co chcete koupit?"<<endl;
+        cout<<"\t1 - Chleba za 1 zlaťák, +10% HP"<<endl;
+        cout<<"\t2 - Jablko za 3 zlaťáků, +20% HP"<<endl;
+        cout<<"\t3 - Polévku za 7 zlaťáků, +25% HP a +10% many"<<endl;
+        cout<<"\t4 - Zlaté jablko za 15 zlaťáků, +40% HP a +20% many"<<endl;
+
+        cout<<"Vaše odpověď: ";
+        cin>>odpoved;
+
+        switch(odpoved){
+        case 1:
+            if(gold>=1){
+                gold = gold - 1;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Chleba (+10% HP)";
+                    efekt[(10*plnostInventaru)+0] = 10;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Chleba (+10% HP) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 2:
+            if(gold>=3){
+                gold = gold - 3;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Jablko (+20% HP)";
+                    efekt[(10*plnostInventaru)+0] = 20;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Jablko (+20% HP) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 3:
+            if(gold>=7){
+                gold = gold - 7;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Polévka (+25% HP, +10% many)";
+                    efekt[(10*plnostInventaru)+0] = 25;
+                    efekt[(10*plnostInventaru)+2] = 10;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Polévka (+25% HP, +10% many) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 4:
+            if(gold>=15){
+                gold = gold - 15;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Zlaté jablko (+40% HP, +20% many)";
+                    efekt[(10*plnostInventaru)+0] = 40;
+                    efekt[(10*plnostInventaru)+2] = 20;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Zlaté jablko (+40% HP, +20% many) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        default:
+            cout<<"Zadal jsi něco špatně, zkus to znovu..."<<endl;
+            o = 0;
+            break;
+        }
+    } while (o==0);
+}
+
+obchodNacini(int &gold, string inventar[], int &plnostInventaru, int efekt[], int pocetEfektu[]){
+    int o = 0, odpoved;
+
+    do {
+        cout<<"Co chcete koupit?"<<endl;
+        cout<<"\t1 - Mědný meč za 20 zlaťáků, +5 útoku"<<endl;
+        cout<<"\t2 - Stříbrný meč za 50 zlaťáků, +15 útoku"<<endl;
+        cout<<"\t3 - Dřevěnou hůlku 20 zlaťáků, +5 útoku"<<endl;
+        cout<<"\t4 - Zlatou hůlku za 50 zlaťáků, +15 útoku"<<endl;
+        // útok roste navždy - chyták, legální bug
+
+        cout<<"Vaše odpověď: ";
+        cin>>odpoved;
+
+        switch(odpoved){
+        case 1:
+            if(gold>=20){
+                gold = gold - 20;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Mědný meč (+5 útoku)";
+                    efekt[(10*plnostInventaru)+4] = 5;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Mědný meč (+5 útoku) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 2:
+            if(gold>=50){
+                gold = gold - 50;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Stříbrný meč (+15 útoku)";
+                    efekt[(10*plnostInventaru)+4] = 15;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Stříbrný meč (+15 útoku) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 3:
+            if(gold>=20){
+                gold = gold - 20;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Dřevěná hůlka (+5 útoku)";
+                    efekt[(10*plnostInventaru)+4] = 5;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Dřevěná hůlka (+5 útoku) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 4:
+            if(gold>=50){
+                gold = gold - 50;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Zlatá hůlka (+15 útoku)";
+                    efekt[(10*plnostInventaru)+4] = 15;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Zlatá hůlka (+15 útoku) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        default:
+            cout<<"Zadal jsi něco špatně, zkus to znovu..."<<endl;
+            o = 0;
+            break;
+        }
+    } while (o==0);
+}
+
+obchodSvitky(int &gold, string inventar[], int &plnostInventaru, int efekt[], int pocetEfektu[]){
+    int o = 0, odpoved;
+
+    do {
+        cout<<"Co chcete koupit?"<<endl;
+        cout<<"\t1 - Svitek životů za 30 zlaťáků, +10 max. životů"<<endl;
+        cout<<"\t2 - Svitek many za 30 zlaťáků, +10 max. many"<<endl;
+        cout<<"\t3 - Svitek útoku za 30 zlaťáků, +10 útoku"<<endl;
+        cout<<"\t4 - Svitek plné regenerace za 60 zlaťáků, regenerace 100%"<<endl;
+        // útok roste navždy - chyták, legální bug
+
+        cout<<"Vaše odpověď: ";
+        cin>>odpoved;
+
+        switch(odpoved){
+        case 1:
+            if(gold>=30){
+                gold = gold - 30;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Svitek životů (+10 max. životů)";
+                    efekt[(10*plnostInventaru)+1] = 10;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Svitek životů (+10 max. životů) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 2:
+            if(gold>=30){
+                gold = gold - 30;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Svitek many (+10 max. many)";
+                    efekt[(10*plnostInventaru)+3] = 10;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Svitek many (+10 max. many) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 3:
+            if(gold>=30){
+                gold = gold - 30;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Svitek útoku (+10 útoku)";
+                    efekt[(10*plnostInventaru)+4] = 10;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Svitek útoku (+10 útoku) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        case 4:
+            if(gold>=60){
+                gold = gold - 60;
+                if (plnostInventaru >= 20){
+                    cout<<"Nemáte místa v inventáři, utratily jste zlato na vzduch..."<<endl;
+                    o = 1;
+                } else {
+                    inventar[plnostInventaru] = "Svitek plné regenerace (regenerace 100%)";
+                    efekt[(10*plnostInventaru)+0] = 100;
+                    efekt[(10*plnostInventaru)+2] = 100;
+                    plnostInventaru = plnostInventaru + 1;
+                    cout<<"Svitek plné regenerace (regenerace 100%) máte v inventáři!"<<endl;
+                    o = 1;
+                }
+            } else {
+                cout<<"Nemáte dost zlata, vydělejte a přiďte znovu!"<<endl;
+                o = 1;
+            }
+            break;
+        default:
+            cout<<"Zadal jsi něco špatně, zkus to znovu..."<<endl;
+            o = 0;
+            break;
+        }
+    } while (o==0);
+}
+
+obchod(int &gold, string inventar[], int &plnostInventaru, int efekt[], int pocetEfektu[]){
+    int o = 0, odpoved;
+
+    do {
+        cout<<"Jaký obchod chcete navštívit?"<<endl;
+        cout<<"\t1 - Obchod s jídlem"<<endl;
+        cout<<"\t2 - Obchod s náčiním"<<endl;
+        cout<<"\t3 - Obchod se svitky"<<endl;
+        cout<<"\t4 - Opustit obchody"<<endl;
+
+        cout<<"Vaše odpověď: ";
+        cin>>odpoved;
+
+        switch(odpoved){
+        case 1:
+            obchodJidlo(gold, inventar, plnostInventaru, efekt, pocetEfektu);
+            break;
+        case 2:
+            obchodNacini(gold, inventar, plnostInventaru, efekt, pocetEfektu);
+            break;
+        case 3:
+            obchodSvitky(gold, inventar, plnostInventaru, efekt, pocetEfektu);
+            break;
+        case 4:
+            cout<<"Zase příště!"<<endl;
+            o = 1;
+            break;
+        default:
+            cout<<"Zadal jsi něco špatně, zkus to znovu..."<<endl;
+            o = 0;
+            break;
+        }
+    } while (o==0);
+}
+
 int main(){
     SetConsoleOutputCP(CP_UTF8);
     string jmeno[1];
@@ -991,6 +1313,17 @@ int main(){
     string schopnosti[10];
     int pocetSchopnosti;
     int bonusStaty, bonusUzite=0;
+    string inventar[20];
+    int plnostInventaru = 0;
+    int efekt[220];
+    int pocetEfektu[22];
+    // pocet efektu vynechame
+    // každá desítka efektu jednotka inventaru => počet efektů přemětu = 10
+    // efekt - 1. pozice zivoty v %
+    // efekt - 2. pozice maxZivoty v %
+    // efekt - 3. pozice Mana v %
+    // efekt - 4. pozice maxMana v %
+    // efekt - 5. pozice utok v %
 
     char odpovedi1;
     int o, oo;
@@ -1073,6 +1406,7 @@ int main(){
                 statistika(jmeno, classa, zivoty, maxZivoty, mana, maxMana, utok, gold, level, zkusenosti, potrebneZkusenosti, schopnosti, pocetSchopnosti, bonusStaty, bonusUzite);
                 break;
             case 3:
+                obchod(gold, inventar, plnostInventaru, efekt, pocetEfektu);
                 break;
             case 4:
                 spani(zivoty, maxZivoty, mana, maxMana, utok, gold);
