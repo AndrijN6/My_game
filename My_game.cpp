@@ -5,59 +5,15 @@
 #include <ctime>
 using namespace std;
 
-pridejPredmet(string inventar[], int &pocet){
-    char vyber;
-    int o=0;
-    if (pocet>=10){
-        cout<<"Mate plny inventar, pokud chcete pridat predmet, tak musite nejdrive odebrat jiny predmet!"<<endl;
-    } else {
-        pocet = pocet + 1;
-        cout<<"Predmety ktere lze pridat: "<<endl;
-        cout<<"\t'Lekarna' - +10HP"<<endl;
-        cout<<"\t'Elixir' - +5 utok"<<endl;
-        cout<<"\t'Otrava' - -10HP"<<endl;
-        cout<<"\t'Tajemny svitek' - nahodny efekt (+HP, -HP, +utok)"<<endl;
-        do{
-            cout<<"Vas vyber(podle prvniho pismene): ";
-            cin>>vyber;
-            vyber = tolower(vyber);
-            switch(vyber){
-            case 'l':
-                cout<<"Lekarna(+10HP), pridana do inventaru na "<<pocet<<". misto!"<<endl;
-                inventar[pocet-1]="Lekarna(+10 HP)";
-                o=1;
-                break;
-            case 'e':
-                cout<<"Elixir(+5 utok), pridan do inventaru na "<<pocet<<". misto!"<<endl;
-                inventar[pocet-1]="Elixir(+5 utok)";
-                o=1;
-                break;
-            case 'o':
-                cout<<"Otrava(-10HP), pridana do inventaru na "<<pocet<<". misto!"<<endl;
-                inventar[pocet-1]="Otrava(-10 HP)";
-                o=1;
-                break;
-            case 't':
-                cout<<"Tajemny svitek(???), pridan do inventaru na "<<pocet<<". misto!"<<endl;
-                inventar[pocet-1]="Tajemny svitek(+HP, -HP, +utok)";
-                o=1;
-                break;
-            default:
-                cout<<"Zadali jste neplatne pismeno zkuste to znovu."<<endl;
-            }
-        } while (o==0);
-    }
-    cout<<endl;
-}
-
-odeberPredmet(string inventar[], int &pocet){
+odeberPredmet(string inventar[], int &pocet, int efekt[]){
     int vyber1;
-    cout<<"Vyberte predmet ktery chcete odebrat: "<<endl;
+    int poc;
+    cout<<"Vyberte předmět, který chcete odebrat: "<<endl;
     for(int i=0; i<pocet; i++){
         cout<<"\t"<<i+1<<" - "<<inventar[i]<<endl;
     }
     do{
-        cout<<"Vas vyber(cislo): ";
+        cout<<"Váš výběr: ";
         cin>>vyber1;
     } while (vyber1<0&&vyber1>pocet);
     for(int i=0; i<pocet; i++){
@@ -65,50 +21,69 @@ odeberPredmet(string inventar[], int &pocet){
             inventar[i-1]=inventar[i];
         }
     }
-    cout<<"Predmet c."<<vyber1<<" byl uspesne odebran z inventaru!"<<endl;
+    poc = vyber1 - 1;
+    for(int i=0; i<pocet; i++){
+        if (vyber1<i+1){
+            for(int j=0; j<10; j++){
+                efekt[((i-1)*10)+j] = efekt[(i*10)+j];
+            }
+        }
+    }
+    cout<<"Předmět č."<<vyber1<<" byl úspěšně odebrán z inventáře!"<<endl;
     cout<<endl;
     pocet = pocet - 1;
 }
 
-pouzijPredmet(string inventar[], int &pocet, int &zivoty, int &utok){
+pouzijPredmet(string inventar[], int &pocet, int efekt[], int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &utok){
     int vyber1;
-    cout<<"Vyberte predmet ktery chcete vyuzit: "<<endl;
+    cout<<"Vyberte předmět, který chcete využít: "<<endl;
     for(int i=0; i<pocet; i++){
         cout<<"\t"<<i+1<<" - "<<inventar[i]<<endl;
     }
     do{
-        cout<<"Vas vyber(cislo): ";
+        cout<<"Váš výběr: ";
         cin>>vyber1;
     } while (vyber1<0&&vyber1>pocet);
 
-    cout<<"Predmet c."<<vyber1<<" byl uspesne vyuzit!"<<endl;
-    if(inventar[vyber1-1]=="Lekarna(+10 HP)"){
-        zivoty=zivoty+10;
-        cout<<"Zivoty zvetseny o 10, prave ted mate "<<zivoty<<"HP."<<endl;
-    } else if(inventar[vyber1-1]=="Elixir(+5 utok)"){
-        utok=utok+5;
-        cout<<"Utok zvetsen o 5, prave ted mate "<<utok<<" utoku."<<endl;
-    } else if(inventar[vyber1-1]=="Otrava(-10 HP)"){
-        zivoty=zivoty-10;
-        cout<<"Zivoty zmenseny o 10, prave ted mate "<<zivoty<<"HP."<<endl;
-    } else if(inventar[vyber1-1]=="Tajemny svitek(+HP, -HP, +utok)"){
-        srand(static_cast<unsigned>(time(0)));
-        int R = rand() % 3 + 1;
-        if (R==1){
-            zivoty=zivoty+10;
-            cout<<"Zivoty zvetseny o 10, prave ted mate "<<zivoty<<"HP."<<endl;
-        } else if (R==2){
-            zivoty=zivoty-10;
-            cout<<"Zivoty zmenseny o 10, prave ted mate "<<zivoty<<"HP."<<endl;
-        } else if (R==3){
-            utok=utok+10;
-            cout<<"Utok zvetsen o 10, prave ted mate "<<utok<<" utoku."<<endl;
+    if(efekt[0]==0){
+    } else {
+        zivoty = zivoty + zivoty*(efekt[0]*0,01);
+        if (zivoty>maxZivoty){
+            zivoty = maxZivoty;
         }
     }
+    if(efekt[1]==0){
+    } else {
+        maxZivoty = maxZivoty + efekt[1];
+    }
+    if(efekt[2]==0){
+    } else {
+        mana = mana + mana*(efekt[2]*0,01);
+        if (mana>maxMana){
+            mana = maxMana;
+        }
+    }
+    if(efekt[3]==0){
+    } else {
+        maxMana = maxMana + efekt[3];
+    }
+    if(efekt[4]==0){
+    } else {
+        utok = utok + efekt[4];
+    }
+
+    cout<<"Předmět č."<<vyber1<<" byl úspěšně využít!"<<endl;
 
     for(int i=0; i<pocet; i++){
         if (vyber1<i+1){
             inventar[i-1]=inventar[i];
+        }
+    }
+    for(int i=0; i<pocet; i++){
+        if (vyber1<i+1){
+            for(int j=0; j<10; j++){
+                efekt[((i-1)*10)+j] = efekt[(i*10)+j];
+            }
         }
     }
     cout<<endl;
@@ -116,54 +91,44 @@ pouzijPredmet(string inventar[], int &pocet, int &zivoty, int &utok){
 }
 
 vypisInventar(string inventar[], int pocet){
-    int vyber;
-    cout<<"Vas inventar: "<<endl;
+    cout<<"Váš inventář: "<<endl;
     for(int i=0; i<pocet; i++){
         cout<<"\t"<<i+1<<" - "<<inventar[i]<<endl;
     }
     cout<<endl;
 }
 
-inventarVyber(){
-    int pocet = 10;
-    string inventar[pocet];
-    int zivoty = 100;
-    int utok = 10;
+inventarV(string inventar[], int &plnostInventaru, int efekt[], int pocetEfektu[], int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &utok){
     int o=1;
     int vyber;
-    cout<<"\tFunkce-inventar: "<<endl;
-    pocet = 0;
+    cout<<"\t---INVENTÁŘ---"<<endl;
     while (o==1){
-        cout<<"Co chcete provest s predmety: "<<endl;
-        cout<<"\t1 - Pridat predmet"<<endl;
-        cout<<"\t2 - Odebrat predmet"<<endl;
-        cout<<"\t3 - Pouzit predmet"<<endl;
-        cout<<"\t4 - Zobrazit inventar"<<endl;
-        cout<<"\t5 - Ukoncit"<<endl;
-        cout<<"Vas vyber: ";
+        cout<<"Co chcete provést s předměty: "<<endl;
+        cout<<"\t1 - Zobrazit inventář"<<endl;
+        cout<<"\t2 - Odebrat předmět"<<endl;
+        cout<<"\t3 - Použít předmět"<<endl;
+        cout<<"\t4 - Ukončit"<<endl;
+        cout<<"Váš výběr: ";
         cin>>vyber;
 
         switch(vyber){
         case 1:
-            pridejPredmet(inventar, pocet);
+            vypisInventar(inventar, plnostInventaru);
             break;
         case 2:
-            odeberPredmet(inventar, pocet);
+            odeberPredmet(inventar, plnostInventaru, efekt);
             break;
         case 3:
-            pouzijPredmet(inventar, pocet, zivoty, utok);
+            pouzijPredmet(inventar, plnostInventaru, efekt, zivoty, maxZivoty, mana, maxMana, utok);
             break;
         case 4:
-            vypisInventar(inventar, pocet);
-            break;
-        case 5:
             o=0;
             break;
         default:
             cout<<"Zadali jste neplatnou hodnotu!"<<endl;
         }
     }
-    cout<<"\tInventar uzavren!"<<endl;
+    cout<<"\tInventář uzavřen!"<<endl;
 }
 
 vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string schopnosti[]){
@@ -1324,6 +1289,9 @@ int main(){
     // efekt - 3. pozice Mana v %
     // efekt - 4. pozice maxMana v %
     // efekt - 5. pozice utok v %
+    for(int i=0; i<220; i++){
+        efekt[i] = 0;
+    }
 
     char odpovedi1;
     int o, oo;
@@ -1355,16 +1323,22 @@ int main(){
     } while (o==0);
     if (rozvetveni==1){
         cout<<"Kdysi dávno před tisíselitími na tomto místě bylo čiré moře."<<endl;
+        Sleep(2000);
         cout<<"Jednou však království Ardante zaútočilo na krále draků, "<<endl;
         cout<<"tím se započala kontinentální vláka lidstva proti králi draků."<<endl;
+        Sleep(5000);
         cout<<"Válka pokračovala roky..., až z lidstva nezbyly skoro jen ruiny, "<<endl;
         cout<<"půlka draků zemřela a zraněný král draků vytvořil tento ostrov pro své vyzdravení."<<endl;
+        Sleep(4000);
         cout<<"Tehdejší lidstvo bylo mnohemkrát pokročilejší, "<<endl;
         cout<<"a po té skáze jsme neměli na krále draků, který se tu léčí."<<endl;
+        Sleep(4000);
         cout<<"Jak minuly ty tisíceletí, tak nikdo neví jestli je král draků stále živ, "<<endl;
         cout<<"ale jisté je, že jeho moc a aura napomáhá vznikat novým a silnějším monstrům, "<<endl;
         cout<<"a právě proto tu žijí nejčastěji zdatní bojovat nebo vojenské síly."<<endl;
+        Sleep(7000);
         cout<<"No a jak je asi zřejmé, čím blíže se přiblížíte k centru ostrova, tím silnější nestvůry tam budou."<<endl;
+        Sleep(12000);
         cout<<endl;
     } else if (rozvetveni==0){
         cout<<"Historii si poslechneme někdy jindy a teď jdeme na něco zajímavějšího..."<<endl;
@@ -1400,7 +1374,7 @@ int main(){
 
             switch(vyber){
             case 1:
-                inventarVyber();
+                inventarV(inventar, plnostInventaru, efekt, pocetEfektu, zivoty, maxZivoty, mana, maxMana, utok);
                 break;
             case 2:
                 statistika(jmeno, classa, zivoty, maxZivoty, mana, maxMana, utok, gold, level, zkusenosti, potrebneZkusenosti, schopnosti, pocetSchopnosti, bonusStaty, bonusUzite);
