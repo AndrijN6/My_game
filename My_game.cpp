@@ -131,7 +131,7 @@ inventarV(string inventar[], int &plnostInventaru, int efekt[], int pocetEfektu[
     cout<<"\tInventář uzavřen!"<<endl;
 }
 
-vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string schopnosti[]){
+vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string schopnosti[], int efektSchopnosti[]){
     int o=0, oo=0, ooo=0;
     char vyber, vyber2;
     cout<<"\tTeď pro záchranu tohoto ostrova si musíte vybrat classu!"<<endl;
@@ -173,8 +173,16 @@ vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string sch
                         utok = 15;
                         maxMana = 10;
                         schopnosti[0] = "Aura - 200% poškození 1 nepřáteli za 2 many";
+                        efektSchopnosti[0] = 2;
+                        efektSchopnosti[1] = 100;
+                        efektSchopnosti[2] = 1;
                         schopnosti[1] = "Svatý útok - 50% poškození všem nepřátelům za 3 many";
+                        efektSchopnosti[10+0] = 3;
+                        efektSchopnosti[10+1] = -50;
+                        efektSchopnosti[10+2] = 2;
                         schopnosti[2] = "Oživení - vyléčíš si 20% životů za 2 many";
+                        efektSchopnosti[20+0] = 2;
+                        efektSchopnosti[20+3] = 20;
                         cout<<"Class je úspěšně vybrán, váš class: "<<classa[0]<<endl;
                         o=1;
                         oo=1;
@@ -214,8 +222,16 @@ vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string sch
                         utok = 15;
                         maxMana = 15;
                         schopnosti[0] = "Ohnivá koule - 300% poškození 1 nepřáteli za 4 many";
+                        efektSchopnosti[0] = 4;
+                        efektSchopnosti[1] = 200;
+                        efektSchopnosti[2] = 1;
                         schopnosti[1] = "Ohnivé pole - 100% poškození všem nepřátelům za 5 many";
+                        efektSchopnosti[10+0] = 5;
+                        efektSchopnosti[10+1] = 0;
+                        efektSchopnosti[10+2] = 2;
                         schopnosti[2] = "Prokletí - příští poškození od nepřítele je o 50% slabší za 3 many";
+                        efektSchopnosti[20+0] = 3;
+                        efektSchopnosti[20+4] = 50;
                         cout<<"Class je úspěšně vybrán, váš class: "<<classa[0]<<endl;
                         o=1;
                         oo=1;
@@ -255,8 +271,16 @@ vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string sch
                         utok = 12;
                         maxMana = 10;
                         schopnosti[0] = "Výstřel - na střelu naneseš přírodní element a naneseš nepříteli 200% poškození za 3 many";
+                        efektSchopnosti[0] = 3;
+                        efektSchopnosti[1] = 100;
+                        efektSchopnosti[2] = 1;
                         schopnosti[1] = "Léčení - vyléčíš si 10% životů přírodním elementem za 2 many";
-                        schopnosti[2] = "Past - každý příští útok nepřítel s šancí 33% stoupne do pasti dostane 10 poškození a jeho útok se sníží o 33%";
+                        efektSchopnosti[10+0] = 2;
+                        efektSchopnosti[10+3] = 10;
+                        schopnosti[2] = "Past - každý příští útok nepřítel s šancí 33% stoupne do pasti a dostane +50% (150%) poškození a jeho příští útok se sníží o 33%";
+                        efektSchopnosti[20+5] = 33;
+                        efektSchopnosti[20+7] = 50;
+                        efektSchopnosti[20+4] = 33;
                         cout<<"Class je úspěšně vybrán, váš class: "<<classa[0]<<endl;
                         o=1;
                         oo=1;
@@ -296,8 +320,19 @@ vyberClassu(string classa[], int &maxZivoty, int &maxMana, int &utok, string sch
                         utok = 18;
                         maxMana = 10;
                         schopnosti[0] = "Skrytí- s 50% šancí nepřítel na vás nezaútočí za 3 many";
+                        efektSchopnosti[0] = 3;
+                        efektSchopnosti[9] = 50;
                         schopnosti[1] = "Rychlý útok- s 80% šancí provedete 2. útok a s 10% šancí i 3. útok za 3 many";
+                        efektSchopnosti[10+0] = 3;
+                        efektSchopnosti[10+5] = 80;
+                        efektSchopnosti[10+7] = 100;
+                        efektSchopnosti[10+6] = 10;
+                        efektSchopnosti[10+8] = 200;
                         schopnosti[2] = "Kritický útok - nanesete 200% poškození a s šancí v 25% nanesete 300% poškození za 2 many";
+                        efektSchopnosti[20+0] = 2;
+                        efektSchopnosti[20+1] = 100;
+                        efektSchopnosti[20+5] = 25;
+                        efektSchopnosti[20+7] = 200;
                         cout<<"Class je úspěšně vybrán, váš class: "<<classa[0]<<endl;
                         o=1;
                         oo=1;
@@ -1265,6 +1300,31 @@ obchod(int &gold, string inventar[], int &plnostInventaru, int efekt[], int poce
     } while (o==0);
 }
 
+utokMonstra(){}
+utokDvouMonster(){}
+utokTriMonster(){}
+utokMiniBossa(){}
+utokBossa(){}
+
+utokLes(int &les){
+    if(les==1){
+        utokMonstra();
+        utokMonstra();
+        utokMonstra();
+        utokDvouMonster();
+        utokMiniBossa();
+        utokMonstra();
+    }else if(les==2){
+        utokMonstra();
+        utokMonstra();
+        utokDvouMonster();
+        utokTriMonster();
+        utokMiniBossa();
+        utokTriMonster();
+        utokBossa();
+    }
+}
+
 int main(){
     SetConsoleOutputCP(CP_UTF8);
     string jmeno[1];
@@ -1292,6 +1352,23 @@ int main(){
     for(int i=0; i<220; i++){
         efekt[i] = 0;
     }
+    int efektSchopnosti[30];
+    // princip jako u efektu
+    // efekt - 1. pozice -mana za chopnost
+    // efekt - 2. pozice +útok v %
+    // efekt - 3. pozice zda tato schopnost je na jednoho-1 nebo všechny protivníky-2
+    // efekt - 4. pozice léčení v %
+    // efekt - 5. pozice slabší útok příště v %
+    // efekt - 6. pozice šance schopnosti v %
+    // efekt - 7. pozice šance 2. schopnosti v %
+    // efekt - 8. +útok v %, šance
+    // efekt - 9. +útok v %, šance 2.
+    // efekt - 10. šance nedostat úder
+    for(int i=0; i<30; i++){
+        efektSchopnosti[i] = 0;
+    }
+
+    int les = 1;
 
     char odpovedi1;
     int o, oo;
@@ -1345,7 +1422,7 @@ int main(){
     }
 
     cout<<endl;
-    vyberClassu(classa, maxZivoty, maxMana, utok, schopnosti);
+    vyberClassu(classa, maxZivoty, maxMana, utok, schopnosti, efektSchopnosti);
     zivoty = maxZivoty;
     mana = maxMana;
     level = 1;
@@ -1386,6 +1463,7 @@ int main(){
                 spani(zivoty, maxZivoty, mana, maxMana, utok, gold);
                 break;
             case 5:
+                utokLes(les);
                 break;
             default:
                 cout<<"Zadali jste neplatnou hodnotu!"<<endl;
