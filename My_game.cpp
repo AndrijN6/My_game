@@ -1300,23 +1300,253 @@ obchod(int &gold, string inventar[], int &plnostInventaru, int efekt[], int poce
     } while (o==0);
 }
 
-utokMonstra(){}
+utokMonstra(int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &utok, int &gold, int &zkusenosti, string schopnosti[], int efektSchopnosti[], int &smrt){
+    int maxZivotyM  = 60;
+    int zivotyM = maxZivotyM;
+    int maxManaM = 20;
+    int manaM = maxManaM;
+    int utokM = 20;
+    int sanceKritu = 20;
+    int jakyEfekt;
+    int tentoUtok;
+    int tentoUtok2;
+    int tentoUtok3;
+    int slabsiUtokNepritele;
+    int konec;
+
+    int o = 1;
+    int odpoved;
+    cout<< "'Monstrum'" <<endl;
+    cout<< "HP: "<< zivotyM << "/" << maxZivotyM << "\tMana: " << manaM << "/" << maxManaM<<endl;
+    cout<<"Útok: "<< utokM << "\tŠance kritického útoku: " << sanceKritu <<endl;
+    cout<<endl;
+    cout<< "Chcete na něj zaútočit (poslední šance odejít)?" <<endl;
+    cout<< "1 - Ano" <<endl;
+    cout<< "2 - Ne" <<endl;
+    cout<< "Vaše rozhodnutí: ";
+    cin >> o;
+
+    int a=1;
+    srand(time(0));
+    int r, ano;
+    while(o==1){
+        if(a==1){
+            cout<< "'Hrdina'" <<endl;
+            cout<< "HP: "<< zivoty << "/" << maxZivoty << "\tMana: " << mana << "/" << maxMana << "\tÚtok: "<< utok <<endl;
+            cout<<"Tento útok: " <<endl;
+            cout<< "1 - " << schopnosti[0] <<endl;
+            cout<< "2 - " << schopnosti[1] <<endl;
+            cout<< "3 - " << schopnosti[2] <<endl;
+            cout<< "4 - Normální úder" <<endl;
+            cout<< "Vaše rozhodnutí: ";
+            cin >> odpoved;
+            switch(odpoved){
+            case 1:
+                jakyEfekt = 0;
+                break;
+            case 2:
+                jakyEfekt = 1;
+                break;
+            case 3:
+                jakyEfekt = 2;
+                break;
+            case 4:
+                jakyEfekt = 5;
+                break;
+            default:
+                cout<< "Jelikož jste nezadali hodnotu z výběru, tak provede se Normální úder, :(." <<endl;
+                jakyEfekt = 5;
+                break;
+            }
+            cout<<endl;
+
+            if(efektSchopnosti[(10*jakyEfekt)+0]>0){
+                mana = mana - efektSchopnosti[(10*jakyEfekt)+0];
+            } else if(efektSchopnosti[(10*jakyEfekt)+1]>0){
+                tentoUtok = utok + utok*(0,01*efektSchopnosti[(10*jakyEfekt)+1]);
+                if(efektSchopnosti[(10*jakyEfekt)+1]=0){
+                    tentoUtok = utok;
+                }
+            } else if(efektSchopnosti[(10*jakyEfekt)+2]>0){
+                //zde ne
+            } else if(efektSchopnosti[(10*jakyEfekt)+3]>0){
+                mana = mana + maxMana*(0,01*efektSchopnosti[(10*jakyEfekt)+3]);
+                if(mana>maxMana){
+                    mana = maxMana;
+                }
+            } else if(efektSchopnosti[(10*jakyEfekt)+4]>0){
+                slabsiUtokNepritele = efektSchopnosti[(10*jakyEfekt)+4];
+                if(efektSchopnosti[(10*jakyEfekt)+4]=0){
+                    slabsiUtokNepritele = 0;
+                }
+            } else if(efektSchopnosti[(10*jakyEfekt)+5]>0){
+                r = rand()%100+1;
+                if(r<=efektSchopnosti[(10*jakyEfekt)+5]){
+                    ano = 1;
+                } else {
+                    ano = 0;
+                }
+            } else if(efektSchopnosti[(10*jakyEfekt)+5]=0){
+                ano=0;
+            } else if(ano==1){
+                tentoUtok2 = utok + utok*(0,01*efektSchopnosti[(10*jakyEfekt)+7]);
+            } else if(ano=0){
+                tentoUtok2 = 0;
+            } else if(efektSchopnosti[(10*jakyEfekt)+6]>0){
+                r = rand()%100+1;
+                if(r<=efektSchopnosti[(10*jakyEfekt)+6]){
+                    ano = 1;
+                } else {
+                    ano = 0;
+                }
+            } else if(efektSchopnosti[(10*jakyEfekt)+6]=0){
+                ano=0;
+            } else if(ano==1){
+                tentoUtok3 = utok + utok*(0,01*efektSchopnosti[(10*jakyEfekt)+8]);
+            } else if(ano==0){
+                tentoUtok3 = 0;
+            } else if(efektSchopnosti[(10*jakyEfekt)+9]>0){
+                r = rand()%100+1;
+                if(r<=efektSchopnosti[(10*jakyEfekt)+5]){
+                    slabsiUtokNepritele = 100;
+                } else {
+                    slabsiUtokNepritele = 0;
+                }
+            }
+
+            zivotyM = zivotyM - tentoUtok - tentoUtok2 - tentoUtok3;
+            if(zivotyM<=0){
+                konec =1;
+                o = 0;
+            }
+            a = a + 2;
+        } else if(a==2){
+            cout<< "'Monstrum'" <<endl;
+            cout<< "HP: "<< zivotyM << "/" << maxZivotyM << "\tMana: " << manaM << "/" << maxManaM<<endl;
+            cout<<"Útok: "<< utokM << "\tŠance kritického útoku: " << sanceKritu <<endl;
+            cout<<endl;
+
+            tentoUtok = utokM - utokM*(0,01*slabsiUtokNepritele);
+
+            r = rand()%100+1;
+            if(r<=sanceKritu){
+                tentoUtok = tentoUtok*2;
+                zivoty = zivoty - tentoUtok;
+                cout<< "Monstr zaútočil kritickým úderem!" <<endl;
+                cout<< "Vaše životy (HP): " << zivoty <<endl;
+                cout<<endl;
+            } else {
+                zivoty = zivoty - tentoUtok;
+                cout<< "Monstr zaútočil normálním úderem!" <<endl;
+                cout<< "Vaše životy (HP): " << zivoty <<endl;
+                cout<<endl;
+            }
+            if(zivoty<=0){
+                konec =2;
+                o = 0;
+            }
+        }
+        a = a - 1;
+    }
+    cout<< "Boj ukončen!" <<endl;
+    if(konec==1){
+        cout<< "Monstr umřel, dostali jste 5XP (zkušeností)!" <<endl;
+        zkusenosti = zkusenosti + 5;
+        cout<< "Taky jsi za něj dostal 5 zlata!" <<endl;
+        gold = gold + 5;
+    } else if(konec==2){
+        cout<< "Zemřeli jste, po vaší smrti za pár dní ostrov byl zničen..." <<endl;
+        cout<< "V ráji už na vás čekají, jdi..." <<endl;
+        cout<< "---KONEC---" <<endl;
+        smrt = 0;
+    }
+    cout<<endl;
+}
 utokDvouMonster(){}
 utokTriMonster(){}
 utokMiniBossa(){}
 utokBossa(){}
 
-utokLes(int &les){
+utokLes(int &les, string jmeno[], string classa[], int &zivoty, int &maxZivoty, int &mana, int &maxMana, int &utok, int &gold, int &level, int &zkusenosti, int &potrebneZkusenosti, string schopnosti[], int &pocetSchopnosti, int &bonusStaty, int &bonusUzite, int efektSchopnosti[], string inventar[], int &plnostInventaru, int efekt[], int pocetEfektu[], int &smrt){
+    int o, oo;
+    int vyber;
+    int boj=1;
     if(les==1){
-        utokMonstra();
-        utokMonstra();
-        utokMonstra();
-        utokDvouMonster();
-        utokMiniBossa();
-        utokMonstra();
+        o = 1;
+        while(o==1){
+            cout<<endl;
+            cout<<"\t---BOJ---"<<endl;
+            cout<<endl;
+            cout<<""<<endl;
+
+            oo = 1;
+            while (oo==1){
+                cout<<"Jak chcete pokračovat?"<<endl;
+                cout<<"\t1 - Otevřít inventář"<<endl;
+                cout<<"\t2 - Otevřít statistiku"<<endl;
+                cout<<"\t3 - Jít do boje"<<endl;
+                cout<<"\t4 - Vrátit se do vestnice"<<endl;
+                cout<<"Váš výběr: ";
+                cin>>vyber;
+
+                switch(vyber){
+                case 1:
+                    inventarV(inventar, plnostInventaru, efekt, pocetEfektu, zivoty, maxZivoty, mana, maxMana, utok);
+                    break;
+                case 2:
+                    statistika(jmeno, classa, zivoty, maxZivoty, mana, maxMana, utok, gold, level, zkusenosti, potrebneZkusenosti, schopnosti, pocetSchopnosti, bonusStaty, bonusUzite);
+                    break;
+                case 3:
+                    switch(boj){
+                    case 1:
+                        utokMonstra(zivoty, maxZivoty, mana, maxMana, utok, gold, zkusenosti, schopnosti, efektSchopnosti, smrt);
+                        boj = boj + 1;
+                        break;
+                    case 2:
+                        utokMonstra(zivoty, maxZivoty, mana, maxMana, utok, gold, zkusenosti, schopnosti, efektSchopnosti, smrt);
+                        boj = boj + 1;
+                        break;
+                    case 3:
+                        utokMonstra(zivoty, maxZivoty, mana, maxMana, utok, gold, zkusenosti, schopnosti, efektSchopnosti, smrt);
+                        boj = boj + 1;
+                        break;
+                    case 4:
+                        utokDvouMonster();
+                        boj = boj + 1;
+                        break;
+                    case 5:
+                        utokMiniBossa();
+                        boj = boj + 1;
+                        break;
+                    case 6:
+                        utokMonstra(zivoty, maxZivoty, mana, maxMana, utok, gold, zkusenosti, schopnosti, efektSchopnosti, smrt);
+                        boj = boj + 1;
+                        break;
+                    }
+                    oo = 0;
+                    break;
+                case 4:
+                    oo = 0;
+                    o = 0;
+                    break;
+                default:
+                    cout<<"Zadali jste neplatnou hodnotu!"<<endl;
+                }
+                if(smrt==0){
+                    oo = 0;
+                    o = 0;
+                }
+                if(boj==7){
+                    les = 2;
+                    o = 0;
+                    oo = 0;
+                    cout<<"Došli jste k 1. vestnici, jen tak dál!"<<endl;
+                }
+            }
+        }
     }else if(les==2){
-        utokMonstra();
-        utokMonstra();
+        utokMonstra(zivoty, maxZivoty, mana, maxMana, utok, gold, zkusenosti, schopnosti, efektSchopnosti, smrt);
+        utokMonstra(zivoty, maxZivoty, mana, maxMana, utok, gold, zkusenosti, schopnosti, efektSchopnosti, smrt);
         utokDvouMonster();
         utokTriMonster();
         utokMiniBossa();
@@ -1367,6 +1597,7 @@ int main(){
     for(int i=0; i<30; i++){
         efektSchopnosti[i] = 0;
     }
+    int smrt = 1;
 
     int les = 1;
 
@@ -1463,7 +1694,11 @@ int main(){
                 spani(zivoty, maxZivoty, mana, maxMana, utok, gold);
                 break;
             case 5:
-                utokLes(les);
+                utokLes(les, jmeno, classa, zivoty, maxZivoty, mana, maxMana, utok, gold, level, zkusenosti, potrebneZkusenosti, schopnosti, pocetSchopnosti, bonusStaty, bonusUzite, efektSchopnosti, inventar, plnostInventaru, efekt, pocetEfektu, smrt);
+                if(smrt==0){
+                    o = 0;
+                }
+                oo = 0;
                 break;
             default:
                 cout<<"Zadali jste neplatnou hodnotu!"<<endl;
